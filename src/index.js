@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import { RootRouter } from './routes/RootRouter';
+
 import './styles/global.css';
 import './styles/index.css';
 import '@progress/kendo-theme-default/dist/all.css';
-import { App } from './components/App';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<Router>
+			<RootRouter />
+		</Router>
 	</React.StrictMode>,
 	document.getElementById('root')
 );
