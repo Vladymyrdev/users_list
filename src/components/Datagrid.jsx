@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-	Grid,
-	GridColumn as Column,
-	GridToolbar,
-} from '@progress/kendo-react-grid';
+import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { sampleProducts } from '../products';
 
 export const Datagrid = () => {
@@ -16,21 +12,6 @@ export const Datagrid = () => {
 		console.log(event.dataItem.ProductID);
 	};
 
-	const itemChange = (event) => {
-		const inEditID = event.dataItem.ProductID;
-		const field = event.field || '';
-		const newData = data.map((item) =>
-			item.ProductID === inEditID ? { ...item, [field]: event.value } : item
-		);
-		setData(newData);
-	};
-
-	const closeEdit = (event) => {
-		if (event.target === event.currentTarget) {
-			setEditID(null);
-		}
-	};
-
 	return (
 		<Grid
 			style={{
@@ -40,13 +21,8 @@ export const Datagrid = () => {
 				...item,
 				inEdit: item.ProductID === editID,
 			}))}
-			editField="inEdit"
 			onRowClick={rowClick}
-			onItemChange={itemChange}
 		>
-			<GridToolbar>
-				<div onClick={closeEdit}></div>
-			</GridToolbar>
 			<Column field="ProductID" title="Id" width="50px" editable={false} />
 			<Column field="UserName" title="User name" />
 			<Column

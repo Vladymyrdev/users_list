@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/global.css';
+import './styles/index.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import { App } from './components/App';
 
