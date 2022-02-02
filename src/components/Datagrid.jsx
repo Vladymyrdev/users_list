@@ -25,12 +25,7 @@ export const Datagrid = () => {
 		>
 			<Column field="ProductID" title="Id" width="50px" editable={false} />
 			<Column field="UserName" title="User name" />
-			<Column
-				field="FullName"
-				title="Full name"
-				width="150px"
-				editor="numeric"
-			/>
+			<Column field="FullName" title="Full name" editor="numeric" />
 			<Column
 				field="LastLogin"
 				title="Last Login"
