@@ -1,4 +1,4 @@
 export const RoutesEnum = {
 	HOME: '/',
-	DETAIL: '/user/:id',
+	DETAIL: '/user_detail/:id',
 };

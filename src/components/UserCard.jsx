@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
-
+import { useHistory } from 'react-router-dom';
+import { RoutesEnum } from '../routes/constants';
 export const UserCard = ({ data }) => {
-	const [userData, setUserData] = React.useState(data);
-	const [editID, setEditID] = React.useState(null);
+	const [userData, setUserData] = useState(data);
+	const [editID, setEditID] = useState(null);
+	const history = useHistory();
 
 	const rowClick = (event) => {
 		setEditID(event.dataItem.ProductID);
@@ -18,19 +20,31 @@ export const UserCard = ({ data }) => {
 		setUserData(newData);
 	};
 
+	const onHandleBackHome = () => {
+		history.replace(RoutesEnum.HOME);
+	};
+
 	return (
-		<Grid
-			data={userData.map((item) => ({
-				...item,
-				inEdit: item.ProductID === editID,
-			}))}
-			editField="inEdit"
-			onRowClick={rowClick}
-			onItemChange={itemChange}
-		>
-			<Column field="UserName" title="User Name" />
-			<Column field="FullName" title="Full Name" />
-			<Column field="Enabled" title="Enabled" editor="boolean" />
-		</Grid>
+		<div className="user_card">
+			<Grid
+				data={userData.map((item) => ({
+					...item,
+					inEdit: item.ProductID === editID,
+				}))}
+				editField="inEdit"
+				onRowClick={rowClick}
+				onItemChange={itemChange}
+			>
+				<Column field="UserName" title="User Name" />
+				<Column field="FullName" title="Full Name" />
+				<Column field="Enabled" title="Enabled" editor="boolean" />
+			</Grid>
+			<button
+				className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+				onClick={onHandleBackHome}
+			>
+				BACK TO HOME
+			</button>
+		</div>
 	);
 };

@@ -22,11 +22,12 @@ export const Detail = () => {
 					setUserData(fileredUser);
 					setIsLoading(false);
 				});
-			}, 1500);
+			}, 1000);
 		} catch (error) {
 			console.log('Error fetch data', error);
 		}
 	}, [userId]);
+
 	return (
 		<div className="detail">
 			{userData?.map((item) => (

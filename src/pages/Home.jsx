@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { Datagrid } from '../components/Datagrid';
-import { Header } from '../components/Header';
 import { Loader } from '../components/Loader';
-import { useHistory } from 'react-router-dom';
+import { App } from '../components/App';
 
 export const Home = () => {
 	const [usersData, setUsersData] = useState([]);
@@ -15,11 +15,13 @@ export const Home = () => {
 	const rowClick = (event) => {
 		const userId = event.dataItem.ProductID;
 		setEditID(userId);
-		history.replace(`/user/id${userId}`);
+		history.replace(`/user_detail/id${userId}`);
 	};
 
-	const enabledCell = (props) => {
-		return <td>{props.dataItem[props.field] ? 'Yes' : 'No'}</td>;
+	const dataCell = (props) => {
+		const value = props.dataItem[props.field];
+		const formattingDate = new Date(value).toLocaleDateString('en-US');
+		return <td style={{ textAlign: 'center' }}>{formattingDate}</td>;
 	};
 
 	useEffect(() => {
@@ -38,17 +40,13 @@ export const Home = () => {
 
 	return (
 		<div>
-			<Header />
-			{isLoading ? (
-				<Loader />
-			) : (
-				<Datagrid
-					data={usersData}
-					editID={editID}
-					rowClick={rowClick}
-					enabledCell={enabledCell}
-				/>
-			)}
+			<App>
+				{isLoading ? (
+					<Loader />
+				) : (
+					<Datagrid data={usersData} rowClick={rowClick} dataCell={dataCell} />
+				)}
+			</App>
 		</div>
 	);
 };

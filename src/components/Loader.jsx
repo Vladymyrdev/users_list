@@ -3,6 +3,7 @@ import React from 'react';
 export const Loader = () => {
 	return (
 		<svg
+			className="loader_image"
 			version="1.1"
 			id="L2"
 			xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +16,7 @@ export const Loader = () => {
 		>
 			<circle
 				fill="none"
-				stroke="#666666"
+				stroke="#fff"
 				strokeWidth="4"
 				strokeMiterlimit="10"
 				cx="50"
@@ -25,7 +26,7 @@ export const Loader = () => {
 			<line
 				fill="none"
 				strokeLinecap="round"
-				stroke="#666666"
+				stroke="#fff"
 				strokeWidth="4"
 				strokeMiterlimit="10"
 				x1="50"
@@ -45,7 +46,7 @@ export const Loader = () => {
 			<line
 				fill="none"
 				strokeLinecap="round"
-				stroke="#666666"
+				stroke="#fff"
 				strokeWidth="4"
 				strokeMiterlimit="10"
 				x1="50"
