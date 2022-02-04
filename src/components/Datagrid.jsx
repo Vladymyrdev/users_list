@@ -39,7 +39,7 @@ export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
 				pageSize={12}
 				onRowClick={rowClick}
 			>
-				<Column field="ProductID" title="Id" width="40px" editable={false} />
+				<Column field="id" title="Id" width="40px" editable={false} />
 				<Column field="UserName" title="User name" columnMenu={ColumnMenu} />
 				<Column field="FullName" title="Full name" />
 				<Column

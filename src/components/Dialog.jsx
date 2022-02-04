@@ -99,19 +99,21 @@ export const Dialog = ({ setUsers }) => {
 
 	const handleSubmit = (dataItem) => {
 		const newUser = {
-			// ProductID: Math.random().toString(16).slice(2),
-			ProductID: 15,
+			id: Math.random().toString(16).slice(2),
 			UserName: dataItem.userName,
 			FullName: dataItem.fullName,
 			Enabled: dataItem.enabled,
 			LastLogin: new Date(),
 		};
 
-		axios.post('http://localhost:3001/users', newUser).then(({ data }) => {
-			console.log(data.users);
-			setVisible(false);
-		});
-		console.log('NEWUSER', newUser);
+		axios
+			.post('http://localhost:3001/users', newUser)
+			.then(({ data }) => {
+				setUsers(data.users);
+			})
+			.catch(() => {
+				console.log('Error saving user');
+			});
 	};
 
 	return (
