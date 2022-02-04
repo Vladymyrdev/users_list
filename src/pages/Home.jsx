@@ -25,18 +25,19 @@ export const Home = () => {
 	};
 
 	useEffect(() => {
-		try {
-			setIsLoading(true);
-			setTimeout(() => {
-				axios.get('http://localhost:3001/db.json').then(({ data }) => {
-					setUsersData(data.users);
-					setIsLoading(false);
-				});
-			}, 1500);
-		} catch (error) {
-			console.log('Error fetch data', error);
-		}
+		setIsLoading(true);
+		const fetchTimeout = setTimeout(() => {
+			axios.get('http://localhost:3001/db.json').then(({ data }) => {
+				setUsersData(data.users);
+				setIsLoading(false);
+			});
+		}, 1500);
+		return () => {
+			clearTimeout(fetchTimeout);
+		};
 	}, []);
+
+	console.log(usersData);
 
 	return (
 		<div>
@@ -44,7 +45,12 @@ export const Home = () => {
 				{isLoading ? (
 					<Loader />
 				) : (
-					<Datagrid data={usersData} rowClick={rowClick} dataCell={dataCell} />
+					<Datagrid
+						data={usersData}
+						rowClick={rowClick}
+						dataCell={dataCell}
+						setUsers={setUsersData}
+					/>
 				)}
 			</App>
 		</div>

@@ -6,7 +6,7 @@ import { ColumnMenu } from './columnMenu';
 import { MyCustomCell } from './CustomCell';
 import { Dialog } from './Dialog';
 
-export const Datagrid = ({ data, rowClick, dataCell }) => {
+export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
 	const createDataState = (dataState) => {
 		return {
 			result: process(data.slice(0), dataState),
@@ -15,7 +15,7 @@ export const Datagrid = ({ data, rowClick, dataCell }) => {
 	};
 
 	let initialState = createDataState({
-		take: 8,
+		take: 12,
 		skip: 0,
 	});
 
@@ -36,7 +36,7 @@ export const Datagrid = ({ data, rowClick, dataCell }) => {
 				onDataStateChange={dataStateChange}
 				sortable={true}
 				pageable={true}
-				pageSize={8}
+				pageSize={12}
 				onRowClick={rowClick}
 			>
 				<Column field="ProductID" title="Id" width="40px" editable={false} />
@@ -55,7 +55,7 @@ export const Datagrid = ({ data, rowClick, dataCell }) => {
 					editor="boolean"
 				/>
 			</Grid>
-			<Dialog />
+			<Dialog setUsers={setUsers} />
 		</div>
 	);
 };

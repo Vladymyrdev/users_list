@@ -1,40 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Window } from '@progress/kendo-react-dialogs';
-import { Form, Field, FormElement } from '@progress/kendo-react-form';
-import { Error } from '@progress/kendo-react-labels';
-import { Input } from '@progress/kendo-react-inputs';
-import { getter } from '@progress/kendo-react-common';
+import {
+	Form,
+	Field,
+	FormElement,
+	FieldWrapper,
+} from '@progress/kendo-react-form';
+import { Label, Error, Hint } from '@progress/kendo-react-labels';
+import { Input, RadioGroup } from '@progress/kendo-react-inputs';
+import axios from 'axios';
 
-const firstNameGetter = getter('user.firstName');
-const lastNameGetter = getter('user.lastName');
-const userNameGetter = getter('user.userName');
-const enabledGetter = getter('user.enabled');
+const variantsForEnabled = [
+	{
+		label: 'Yes',
+		value: true,
+	},
+	{
+		label: 'No',
+		value: false,
+	},
+];
 
-const regexpUserNAme = /^[a-z0-9_-]{3,15}$/i;
-
-const formValidator = (values) => {
-	if (
-		firstNameGetter(values) ||
-		lastNameGetter(values) ||
-		userNameGetter(values) ||
-		enabledGetter(values)
-	) {
-		return;
-	}
-
-	return {
-		VALIDATION_SUMMARY: 'Please fill all following fields',
-		['user.userName']:
-			'Please check the validation summary for more information.',
-		['user.lastName']:
-			'Please check the validation summary for more information.',
-		['user.firstName']:
-			'Please check the validation summary for more information.',
-		['user.enabled']: "Please enter 'Yes' or 'No' in this field.",
-	};
+const FormRadioGroup = (fieldRenderProps) => {
+	const {
+		validationMessage,
+		touched,
+		id,
+		label,
+		valid,
+		disabled,
+		hint,
+		visited,
+		modified,
+		...others
+	} = fieldRenderProps;
+	const editorRef = useRef(null);
+	const showValidationMessage = touched && validationMessage;
+	const showHint = !showValidationMessage && hint;
+	const hintId = showHint ? `${id}_hint` : '';
+	const errorId = showValidationMessage ? `${id}_error` : '';
+	const labelId = label ? `${id}_label` : '';
+	return (
+		<FieldWrapper>
+			<Label
+				id={labelId}
+				editorRef={editorRef}
+				editorId={id}
+				editorValid={valid}
+				editorDisabled={disabled}
+			>
+				{label}
+			</Label>
+			<RadioGroup
+				ariaDescribedBy={`${hintId} ${errorId}`}
+				ariaLabelledBy={labelId}
+				valid={valid}
+				disabled={disabled}
+				ref={editorRef}
+				{...others}
+			/>
+			{showHint && <Hint id={hintId}>{hint}</Hint>}
+			{showValidationMessage && <Error id={errorId}>{validationMessage}</Error>}
+		</FieldWrapper>
+	);
 };
 
-const ValidatedInput = (fieldRenderProps) => {
+const userNameRegex = new RegExp(/^[a-z0-9]{2,15}$/i);
+const fullNameRegex = new RegExp(
+	/(^[A-Z]{1}[a-z]{1,24}\s[A-Z]{1}[a-z]{1,24}$){1,40}/
+);
+
+const userNameValidator = (value) =>
+	userNameRegex.test(value)
+		? ''
+		: 'Please enter max. 15 characters, only alphanumeric characters, non-empty';
+
+const fullNameValidator = (value) =>
+	fullNameRegex.test(value)
+		? ''
+		: 'Please enter together max. 40 characters, first letter capital, both non-empty, each has max. 25 characters';
+
+const FieldInput = (fieldRenderProps) => {
 	const { validationMessage, visited, ...others } = fieldRenderProps;
 	return (
 		<div>
@@ -44,13 +90,28 @@ const ValidatedInput = (fieldRenderProps) => {
 	);
 };
 
-export const Dialog = () => {
+export const Dialog = ({ setUsers }) => {
 	const [visible, setVisible] = useState(false);
-
-	const handleSubmit = (dataItem) => alert(JSON.stringify(dataItem, null, 2));
 
 	const toggleDialog = () => {
 		setVisible(!visible);
+	};
+
+	const handleSubmit = (dataItem) => {
+		const newUser = {
+			// ProductID: Math.random().toString(16).slice(2),
+			ProductID: 15,
+			UserName: dataItem.userName,
+			FullName: dataItem.fullName,
+			Enabled: dataItem.enabled,
+			LastLogin: new Date(),
+		};
+
+		axios.post('http://localhost:3001/users', newUser).then(({ data }) => {
+			console.log(data.users);
+			setVisible(false);
+		});
+		console.log('NEWUSER', newUser);
 	};
 
 	return (
@@ -65,11 +126,10 @@ export const Dialog = () => {
 				<Window
 					title={'Add new user'}
 					onClose={toggleDialog}
-					initialHeight={400}
+					initialHeight={450}
 				>
 					<Form
 						onSubmit={handleSubmit}
-						validator={formValidator}
 						render={(formRenderProps) => (
 							<FormElement
 								style={{
@@ -78,41 +138,35 @@ export const Dialog = () => {
 							>
 								<fieldset className={'k-form-fieldset'}>
 									<legend className={'k-form-legend'}>
-										Please fill in the following information:
+										Please fill all field:
 									</legend>
-									{formRenderProps.visited &&
-										formRenderProps.errors &&
-										formRenderProps.errors.VALIDATION_SUMMARY && (
-											<div className={'k-messagebox k-messagebox-error'}>
-												{formRenderProps.errors.VALIDATION_SUMMARY}
-											</div>
-										)}
 									<div className="mb-3">
 										<Field
-											name={'user.userName'}
-											component={ValidatedInput}
-											label={'User name'}
+											name={'userName'}
+											type={'name'}
+											component={FieldInput}
+											label={'User Name'}
+											validator={userNameValidator}
 										/>
 									</div>
 									<div className="mb-3">
 										<Field
-											name={'user.firstName'}
-											component={ValidatedInput}
-											label={'First name'}
+											name={'fullName'}
+											type={'name'}
+											component={FieldInput}
+											label={'First Name, Last Name'}
+											validator={fullNameValidator}
 										/>
 									</div>
 									<div className="mb-3">
 										<Field
-											name={'user.lastName'}
-											component={ValidatedInput}
-											label={'Last name'}
-										/>
-									</div>
-									<div className="mb-3">
-										<Field
-											name={'user.enabled'}
-											component={ValidatedInput}
+											key={'enabled'}
+											id={'enabled'}
+											name={'enabled'}
 											label={'Enabled'}
+											layout={'horizontal'}
+											component={FormRadioGroup}
+											data={variantsForEnabled}
 										/>
 									</div>
 								</fieldset>
