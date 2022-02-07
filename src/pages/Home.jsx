@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 import { Datagrid } from '../components/Datagrid';
 import { Loader } from '../components/Loader';
 import { App } from '../components/App';
 
+import { ApiService } from '../services/apiService';
+import { GET_USERS_API } from '../api/constants';
+import { useUsersContext } from '../provider/context';
+
 export const Home = () => {
-	const [usersData, setUsersData] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [editID, setEditID] = useState(null);
 	const history = useHistory();
+	const { state, dispatch } = useUsersContext();
+
+	console.log(state);
 
 	const rowClick = (event) => {
-		const userId = event.dataItem.ProductID;
-		setEditID(userId);
+		const userId = event.dataItem.id;
+		ApiService.setId(dispatch, userId);
 		history.replace(`/user_detail/id${userId}`);
 	};
 
@@ -25,31 +28,25 @@ export const Home = () => {
 	};
 
 	useEffect(() => {
-		setIsLoading(true);
 		const fetchTimeout = setTimeout(() => {
-			axios.get('http://localhost:3001/db.json').then(({ data }) => {
-				setUsersData(data.users);
-				setIsLoading(false);
-			});
-		}, 1500);
+			ApiService.getUsersData(dispatch, GET_USERS_API);
+		}, 1000);
+
 		return () => {
 			clearTimeout(fetchTimeout);
 		};
-	}, []);
-
-	console.log(usersData);
+	}, [dispatch]);
 
 	return (
 		<div>
 			<App>
-				{isLoading ? (
+				{state?.isLoading ? (
 					<Loader />
 				) : (
 					<Datagrid
-						data={usersData}
+						data={state?.users}
 						rowClick={rowClick}
 						dataCell={dataCell}
-						setUsers={setUsersData}
 					/>
 				)}
 			</App>

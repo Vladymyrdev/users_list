@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { process } from '@progress/kendo-data-query';
+
 import { ColumnMenu } from './columnMenu';
 import { MyCustomCell } from './CustomCell';
-import { Dialog } from './Dialog';
+import { Dialog } from '../Dialog';
 
-export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
+export const Datagrid = ({ data, rowClick, dataCell }) => {
 	const createDataState = (dataState) => {
 		return {
 			result: process(data.slice(0), dataState),
@@ -15,7 +15,7 @@ export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
 	};
 
 	let initialState = createDataState({
-		take: 12,
+		take: 10,
 		skip: 0,
 	});
 
@@ -30,13 +30,14 @@ export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
 
 	return (
 		<div className="content">
+			<Dialog />
 			<Grid
 				data={result}
 				{...dataState}
 				onDataStateChange={dataStateChange}
 				sortable={true}
 				pageable={true}
-				pageSize={12}
+				pageSize={10}
 				onRowClick={rowClick}
 			>
 				<Column field="id" title="Id" width="40px" editable={false} />
@@ -55,7 +56,6 @@ export const Datagrid = ({ data, rowClick, dataCell, setUsers }) => {
 					editor="boolean"
 				/>
 			</Grid>
-			<Dialog setUsers={setUsers} />
 		</div>
 	);
 };

@@ -8,7 +8,11 @@ import {
 } from '@progress/kendo-react-form';
 import { Label, Error, Hint } from '@progress/kendo-react-labels';
 import { Input, RadioGroup } from '@progress/kendo-react-inputs';
-import axios from 'axios';
+
+import { ApiService } from '../../services/apiService';
+import { SET_USER_API } from '../../api/constants';
+import { fullNameValidator, userNameValidator } from './validation';
+import { useUsersContext } from '../../provider/context';
 
 const variantsForEnabled = [
 	{
@@ -65,21 +69,6 @@ const FormRadioGroup = (fieldRenderProps) => {
 	);
 };
 
-const userNameRegex = new RegExp(/^[a-z0-9]{2,15}$/i);
-const fullNameRegex = new RegExp(
-	/(^[A-Z]{1}[a-z]{1,24}\s[A-Z]{1}[a-z]{1,24}$){1,40}/
-);
-
-const userNameValidator = (value) =>
-	userNameRegex.test(value)
-		? ''
-		: 'Please enter max. 15 characters, only alphanumeric characters, non-empty';
-
-const fullNameValidator = (value) =>
-	fullNameRegex.test(value)
-		? ''
-		: 'Please enter together max. 40 characters, first letter capital, both non-empty, each has max. 25 characters';
-
 const FieldInput = (fieldRenderProps) => {
 	const { validationMessage, visited, ...others } = fieldRenderProps;
 	return (
@@ -90,14 +79,25 @@ const FieldInput = (fieldRenderProps) => {
 	);
 };
 
-export const Dialog = ({ setUsers }) => {
+export const Dialog = () => {
 	const [visible, setVisible] = useState(false);
+	const { state } = useUsersContext();
 
 	const toggleDialog = () => {
 		setVisible(!visible);
 	};
 
 	const handleSubmit = (dataItem) => {
+		const invalidDataItem = Object.values(dataItem).some((item) => item === '');
+		if (invalidDataItem) return;
+		const notUniqUser = state.users.some(
+			(user) =>
+				user?.UserName.toUpperCase() === dataItem?.userName.toUpperCase()
+		);
+		if (notUniqUser)
+			return alert(
+				'User with the same name already exists. Please enter another user name'
+			);
 		const newUser = {
 			id: Math.random().toString(16).slice(2),
 			UserName: dataItem.userName,
@@ -105,15 +105,8 @@ export const Dialog = ({ setUsers }) => {
 			Enabled: dataItem.enabled,
 			LastLogin: new Date(),
 		};
-
-		axios
-			.post('http://localhost:3001/users', newUser)
-			.then(({ data }) => {
-				setUsers(data.users);
-			})
-			.catch(() => {
-				console.log('Error saving user');
-			});
+		ApiService.setUser(SET_USER_API, newUser);
+		setVisible(false);
 	};
 
 	return (
@@ -128,7 +121,7 @@ export const Dialog = ({ setUsers }) => {
 				<Window
 					title={'Add new user'}
 					onClose={toggleDialog}
-					initialHeight={450}
+					initialHeight={400}
 				>
 					<Form
 						onSubmit={handleSubmit}
@@ -148,6 +141,7 @@ export const Dialog = ({ setUsers }) => {
 											type={'name'}
 											component={FieldInput}
 											label={'User Name'}
+											valid={false}
 											validator={userNameValidator}
 										/>
 									</div>
@@ -156,7 +150,7 @@ export const Dialog = ({ setUsers }) => {
 											name={'fullName'}
 											type={'name'}
 											component={FieldInput}
-											label={'First Name, Last Name'}
+											label={'First Name & Last Name'}
 											validator={fullNameValidator}
 										/>
 									</div>

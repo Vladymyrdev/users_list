@@ -1,39 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { UserCard } from '../components/UserCard';
 import { Loader } from '../components/Loader';
+import { useUsersContext } from '../provider/context';
+import { GET_USERS_API } from '../api/constants';
+import { ApiService } from '../services/apiService';
 
 export const Detail = () => {
-	const [userData, setUserData] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const history = useHistory();
-
-	const userId = history.location.pathname.slice(-1);
+	const { state, dispatch } = useUsersContext();
 
 	useEffect(() => {
-		try {
-			setIsLoading(true);
-			setTimeout(() => {
-				axios.get('http://localhost:3001/db.json').then(({ data }) => {
-					const fileredUser = data.users.filter(
-						(user) => Number(user.ProductID) === Number(userId)
-					);
-					setUserData(fileredUser);
-					setIsLoading(false);
-				});
-			}, 1000);
-		} catch (error) {
-			console.log('Error fetch data', error);
-		}
-	}, [userId]);
+		ApiService.getUserByID(dispatch, GET_USERS_API, state);
+	}, [state?.userID]);
 
 	return (
 		<div className="detail">
-			{userData?.map((item) => (
-				<h1>The card of user {item.FullName}</h1>
+			{state?.userDetail.map((item) => (
+				<h1 key={item.id}>The card of user {item.FullName}</h1>
 			))}
-			{isLoading ? <Loader /> : <UserCard data={userData} />}
+			{state?.isLoading ? <Loader /> : <UserCard data={state?.userDetail} />}
 		</div>
 	);
 };

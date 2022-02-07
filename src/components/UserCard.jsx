@@ -15,7 +15,7 @@ export const UserCard = ({ data }) => {
 		const inEditID = event.dataItem.ProductID;
 		const field = event.field || '';
 		const newData = data.map((item) =>
-			item.ProductID === inEditID ? { ...item, [field]: event.value } : item
+			item.id === inEditID ? { ...item, [field]: event.value } : item
 		);
 		setUserData(newData);
 	};
@@ -24,13 +24,15 @@ export const UserCard = ({ data }) => {
 		history.replace(RoutesEnum.HOME);
 	};
 
+	const renderUserData = userData.map((item) => ({
+		...item,
+		inEdit: item.ProductID === editID,
+	}));
+
 	return (
 		<div className="user_card">
 			<Grid
-				data={userData.map((item) => ({
-					...item,
-					inEdit: item.ProductID === editID,
-				}))}
+				data={renderUserData}
 				editField="inEdit"
 				onRowClick={rowClick}
 				onItemChange={itemChange}
