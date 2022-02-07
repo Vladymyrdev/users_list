@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { UserCard } from '../components/UserCard';
 import { Loader } from '../components/Loader';
 import { useUsersContext } from '../provider/context';
-import { GET_USERS_API } from '../api/constants';
 import { ApiService } from '../services/apiService';
+import { UserDetail } from '../components/UserDetail.jsx';
 
 export const Detail = () => {
 	const {
@@ -12,7 +11,7 @@ export const Detail = () => {
 	} = useUsersContext();
 
 	useEffect(() => {
-		ApiService.getUserByID(dispatch, GET_USERS_API, userID);
+		ApiService.getUserByID(dispatch, userID);
 	}, [dispatch, userID]);
 
 	return (
@@ -20,7 +19,7 @@ export const Detail = () => {
 			{userDetail.map((item) => (
 				<h1 key={item.id}>The card of user {item.FullName}</h1>
 			))}
-			{isLoading ? <Loader /> : <UserCard data={userDetail} />}
+			{isLoading ? <Loader /> : <UserDetail userData={userDetail} />}
 		</div>
 	);
 };

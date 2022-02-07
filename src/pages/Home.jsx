@@ -6,14 +6,11 @@ import { Loader } from '../components/Loader';
 import { App } from '../components/App';
 
 import { ApiService } from '../services/apiService';
-import { GET_USERS_API } from '../api/constants';
 import { useUsersContext } from '../provider/context';
 
 export const Home = () => {
 	const history = useHistory();
 	const { state, dispatch } = useUsersContext();
-
-	console.log(state);
 
 	const rowClick = (event) => {
 		const userId = event.dataItem.id;
@@ -29,7 +26,7 @@ export const Home = () => {
 
 	useEffect(() => {
 		const fetchTimeout = setTimeout(() => {
-			ApiService.getUsersData(dispatch, GET_USERS_API);
+			ApiService.getUsersData(dispatch);
 		}, 1000);
 
 		return () => {

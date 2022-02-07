@@ -1,4 +1,10 @@
-import { SET_LOADING, GET_USERS, SET_USER_ID, GET_USER_BY_ID } from './types';
+import {
+	SET_LOADING,
+	GET_USERS,
+	SET_USER_ID,
+	GET_USER_BY_ID,
+	EDIT_USER,
+} from './types';
 
 export const setUsers = (users) => ({
 	type: GET_USERS,
@@ -17,5 +23,10 @@ export const setUserID = (id) => ({
 
 export const getUser = (user) => ({
 	type: GET_USER_BY_ID,
+	payload: user,
+});
+
+export const onEditUser = (user) => ({
+	type: EDIT_USER,
 	payload: user,
 });
