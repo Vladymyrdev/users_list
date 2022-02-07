@@ -39,14 +39,13 @@ export const UserDetail = ({ userData }) => {
 			newData[0],
 			dispatch
 		);
+		onHandleBackHome();
 		setData(newData);
 		setEditField(undefined);
 	};
 
 	const saveChanges = () => {
 		userData.splice(0, userData.length, ...data);
-		console.log('РЕДИРЕКТ БЛЯЯЯТЬ');
-		onHandleBackHome();
 		setEditField(undefined);
 		setChanges(false);
 	};
