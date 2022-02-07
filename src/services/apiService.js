@@ -4,6 +4,7 @@ import {
 	setUserID,
 	setUsers,
 	getUser,
+	onEditUser,
 } from '../provider/reducer/actions';
 
 export class ApiService {
@@ -28,5 +29,12 @@ export class ApiService {
 		axios.post(api, user).catch((err) => {
 			console.log('Error saving user', err);
 		});
+	};
+
+	static setEditUser = async (api, newUser, dispatch) => {
+		await axios
+			.patch(api, newUser)
+			.catch((err) => console.log('Error editing user', err));
+		dispatch(onEditUser(newUser));
 	};
 }

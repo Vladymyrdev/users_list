@@ -13,8 +13,6 @@ export const Home = () => {
 	const history = useHistory();
 	const { state, dispatch } = useUsersContext();
 
-	console.log(state);
-
 	const rowClick = (event) => {
 		const userId = event.dataItem.id;
 		ApiService.setId(dispatch, userId);

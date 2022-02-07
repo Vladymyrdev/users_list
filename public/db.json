@@ -71,24 +71,11 @@
       "LastLogin": "2022-01-28T12:00:00.417-07:00"
     },
     {
-      "id": "d15fa1f6b89e5",
-      "UserName": "Sansavxv",
-      "FullName": "Ivan Ivanov",
-      "Enabled": false,
-      "LastLogin": "2022-02-07T06:48:49.133Z"
-    },
-    {
-      "id": "f02457d0eed09",
-      "UserName": "fdc",
-      "FullName": "Ivan Ivanov",
-      "Enabled": null,
-      "LastLogin": "2022-02-07T07:03:39.235Z"
-    },
-    {
       "id": "0c7813fd72ee2",
-      "UserName": "Sansafsdfs",
+      "UserName": "TEST1234",
       "FullName": "Ivan Ivanov",
-      "LastLogin": "2022-02-07T07:04:34.261Z"
+      "LastLogin": "2022-02-07T07:04:34.261Z",
+      "Enabled": true
     }
   ]
 }

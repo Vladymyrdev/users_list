@@ -1,4 +1,10 @@
-import { SET_LOADING, GET_USERS, SET_USER_ID, GET_USER_BY_ID } from './types';
+import {
+	SET_LOADING,
+	GET_USERS,
+	SET_USER_ID,
+	GET_USER_BY_ID,
+	EDIT_USER,
+} from './types';
 
 export const initialState = {
 	isLoading: true,
@@ -30,6 +36,16 @@ export const rootReducer = (state, action) => {
 				...state,
 				userDetail: action.payload,
 				isLoading: true,
+			};
+		case EDIT_USER:
+			const editingUser = state.users.map((user) =>
+				user.id === action.payload.id
+					? [...state.users, { [action.payload.id]: action.payload }]
+					: user
+			);
+			return {
+				...state,
+				users: editingUser,
 			};
 
 		default:
