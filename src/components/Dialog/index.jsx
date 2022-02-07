@@ -1,18 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Window } from '@progress/kendo-react-dialogs';
-import {
-	Form,
-	Field,
-	FormElement,
-	FieldWrapper,
-} from '@progress/kendo-react-form';
-import { Label, Error, Hint } from '@progress/kendo-react-labels';
-import { Input, RadioGroup } from '@progress/kendo-react-inputs';
+import { Form, Field, FormElement } from '@progress/kendo-react-form';
 
 import { ApiService } from '../../services/apiService';
 import { SET_USER_API } from '../../api/constants';
 import { fullNameValidator, userNameValidator } from './validation';
 import { useUsersContext } from '../../provider/context';
+import { FormRadioGroup } from './FormRadioGroup';
+import { FieldInput } from './FieldInput';
 
 const variantsForEnabled = [
 	{
@@ -24,60 +19,6 @@ const variantsForEnabled = [
 		value: false,
 	},
 ];
-
-const FormRadioGroup = (fieldRenderProps) => {
-	const {
-		validationMessage,
-		touched,
-		id,
-		label,
-		valid,
-		disabled,
-		hint,
-		visited,
-		modified,
-		...others
-	} = fieldRenderProps;
-	const editorRef = useRef(null);
-	const showValidationMessage = touched && validationMessage;
-	const showHint = !showValidationMessage && hint;
-	const hintId = showHint ? `${id}_hint` : '';
-	const errorId = showValidationMessage ? `${id}_error` : '';
-	const labelId = label ? `${id}_label` : '';
-	return (
-		<FieldWrapper>
-			<Label
-				id={labelId}
-				editorRef={editorRef}
-				editorId={id}
-				editorValid={valid}
-				editorDisabled={disabled}
-			>
-				{label}
-			</Label>
-			<RadioGroup
-				ariaDescribedBy={`${hintId} ${errorId}`}
-				ariaLabelledBy={labelId}
-				valid={valid}
-				disabled={disabled}
-				ref={editorRef}
-				{...others}
-			/>
-			{showHint && <Hint id={hintId}>{hint}</Hint>}
-			{showValidationMessage && <Error id={errorId}>{validationMessage}</Error>}
-		</FieldWrapper>
-	);
-};
-
-const FieldInput = (fieldRenderProps) => {
-	const { validationMessage, visited, ...others } = fieldRenderProps;
-	return (
-		<div>
-			<Input {...others} />
-			{visited && validationMessage && <Error>{validationMessage}</Error>}
-		</div>
-	);
-};
 
 export const Dialog = () => {
 	const [visible, setVisible] = useState(false);
