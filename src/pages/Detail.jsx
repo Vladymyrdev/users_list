@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { UserCard } from '../components/UserCard';
 import { Loader } from '../components/Loader';
 import { useUsersContext } from '../provider/context';
-import { GET_USERS_API } from '../api/constants';
 import { ApiService } from '../services/apiService';
 import { UserDetail } from '../components/UserDetail.jsx';
 
@@ -13,7 +11,7 @@ export const Detail = () => {
 	} = useUsersContext();
 
 	useEffect(() => {
-		ApiService.getUserByID(dispatch, GET_USERS_API, userID);
+		ApiService.getUserByID(dispatch, userID);
 	}, [dispatch, userID]);
 
 	return (

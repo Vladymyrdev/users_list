@@ -1,81 +1,74 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "UserName": "Ichor",
-      "FullName": "James Barnes",
-      "Enabled": true,
-      "LastLogin": "2019-04-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 2,
-      "UserName": "Yeuk",
-      "FullName": "James Schutz",
-      "Enabled": false,
-      "LastLogin": "2020-09-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 3,
-      "UserName": "Sansa",
-      "FullName": "Marcia Delph",
-      "Enabled": false,
-      "LastLogin": "2018-09-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 4,
-      "UserName": "Stoichiology",
-      "FullName": "Marcus Brown",
-      "Enabled": true,
-      "LastLogin": "2021-08-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 5,
-      "UserName": "Chrispyme",
-      "FullName": "Thomas Gaines",
-      "Enabled": true,
-      "LastLogin": "2021-04-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 6,
-      "UserName": "Czarcat",
-      "FullName": "Rod Messina",
-      "Enabled": false,
-      "LastLogin": "2022-01-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 7,
-      "UserName": "lronman98",
-      "FullName": "Myrtle Kaufmann",
-      "Enabled": true,
-      "LastLogin": "2022-01-16T12:00:00.417-07:00"
-    },
-    {
-      "id": 8,
-      "UserName": "Anbe84",
-      "FullName": "Ann Groesbeck",
-      "Enabled": false,
-      "LastLogin": "2022-01-06T12:00:00.417-07:00"
-    },
-    {
-      "id": 9,
-      "UserName": "Thewind",
-      "FullName": "Carie Hale",
-      "Enabled": true,
-      "LastLogin": "2021-12-26T12:00:00.417-07:00"
-    },
-    {
-      "id": 10,
-      "UserName": "Eidolon",
-      "FullName": "Ada Harville",
-      "Enabled": false,
-      "LastLogin": "2022-01-28T12:00:00.417-07:00"
-    },
-    {
-      "id": "0c7813fd72ee2",
-      "UserName": "TEST1234",
-      "FullName": "Ivan Ivanov",
-      "LastLogin": "2022-02-07T07:04:34.261Z",
-      "Enabled": true
-    }
-  ]
+	"users": [
+		{
+			"id": 1,
+			"UserName": "Ichor",
+			"FullName": "James Barnes",
+			"Enabled": true,
+			"LastLogin": "2019-04-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 2,
+			"UserName": "Yeuk",
+			"FullName": "James Schutz",
+			"Enabled": false,
+			"LastLogin": "2020-09-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 3,
+			"UserName": "Sansa",
+			"FullName": "Marcia Delph",
+			"Enabled": false,
+			"LastLogin": "2018-09-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 4,
+			"UserName": "Stoichiology",
+			"FullName": "Marcus Brown",
+			"Enabled": true,
+			"LastLogin": "2021-08-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 5,
+			"UserName": "Chrispyme",
+			"FullName": "Thomas Gaines",
+			"Enabled": true,
+			"LastLogin": "2021-04-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 6,
+			"UserName": "Czarcat",
+			"FullName": "Rod Messina",
+			"Enabled": false,
+			"LastLogin": "2022-01-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 7,
+			"UserName": "lronman98",
+			"FullName": "Myrtle Kaufmann",
+			"Enabled": true,
+			"LastLogin": "2022-01-16T12:00:00.417-07:00"
+		},
+		{
+			"id": 8,
+			"UserName": "Anbe84",
+			"FullName": "Ann Groesbeck",
+			"Enabled": false,
+			"LastLogin": "2022-01-06T12:00:00.417-07:00"
+		},
+		{
+			"id": 9,
+			"UserName": "Thewind",
+			"FullName": "Carie Hale",
+			"Enabled": true,
+			"LastLogin": "2021-12-26T12:00:00.417-07:00"
+		},
+		{
+			"id": 10,
+			"UserName": "Eidolon",
+			"FullName": "Ada Harville",
+			"Enabled": false,
+			"LastLogin": "2022-01-28T12:00:00.417-07:00"
+		}
+	]
 }

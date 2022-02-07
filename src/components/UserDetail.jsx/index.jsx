@@ -32,20 +32,16 @@ export const UserDetail = ({ userData }) => {
 		setEditField(field);
 	};
 
+	const newDataSaving = data.map((item) => ({ ...item, inEdit: undefined }));
+
 	const exitEdit = () => {
-		const newData = data.map((item) => ({ ...item, inEdit: undefined }));
-		ApiService.setEditUser(
-			`http://localhost:3001/users/${userData[0].id}`,
-			newData[0],
-			dispatch
-		);
-		onHandleBackHome();
-		setData(newData);
+		setData(newDataSaving);
 		setEditField(undefined);
 	};
 
 	const saveChanges = () => {
-		userData.splice(0, userData.length, ...data);
+		ApiService.setEditUser(userData[0].id, newDataSaving[0], dispatch);
+		onHandleBackHome();
 		setEditField(undefined);
 		setChanges(false);
 	};
@@ -56,9 +52,9 @@ export const UserDetail = ({ userData }) => {
 	};
 
 	const itemChange = (event) => {
-		let field = event.field || '';
+		const field = event.field || '';
 		event.dataItem[field] = event.value;
-		let newData = data.map((item) => {
+		const newData = data.map((item) => {
 			if (item.ProductID === event.dataItem.ProductID) {
 				item[field] = event.value;
 			}
