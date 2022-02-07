@@ -4,6 +4,7 @@ import { Loader } from '../components/Loader';
 import { useUsersContext } from '../provider/context';
 import { GET_USERS_API } from '../api/constants';
 import { ApiService } from '../services/apiService';
+import { UserDetail } from '../components/UserDetail.jsx';
 
 export const Detail = () => {
 	const {
@@ -20,7 +21,7 @@ export const Detail = () => {
 			{userDetail.map((item) => (
 				<h1 key={item.id}>The card of user {item.FullName}</h1>
 			))}
-			{isLoading ? <Loader /> : <UserCard data={userDetail} />}
+			{isLoading ? <Loader /> : <UserDetail userData={userDetail} />}
 		</div>
 	);
 };

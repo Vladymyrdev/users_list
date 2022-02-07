@@ -18,6 +18,10 @@ const variantsForEnabled = [
 		label: 'No',
 		value: false,
 	},
+	{
+		text: '(empty)',
+		value: null,
+	},
 ];
 
 export const Dialog = () => {
