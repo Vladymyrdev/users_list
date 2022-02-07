@@ -16,9 +16,9 @@ export class ApiService {
 		dispatch(setUserID(id));
 	};
 
-	static getUserByID = async (dispatch, api, state) => {
+	static getUserByID = async (dispatch, api, id) => {
 		await axios.get(api).then(({ data }) => {
-			const fileredUser = data.users.filter((user) => user.id === state.userID);
+			const fileredUser = data.users.filter((user) => user.id === id);
 			dispatch(getUser(fileredUser));
 		});
 		dispatch(setLoading(false));

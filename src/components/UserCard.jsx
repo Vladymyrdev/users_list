@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { useHistory } from 'react-router-dom';
+
 import { RoutesEnum } from '../routes/constants';
+
 export const UserCard = ({ data }) => {
 	const [userData, setUserData] = useState(data);
 	const [editID, setEditID] = useState(null);
